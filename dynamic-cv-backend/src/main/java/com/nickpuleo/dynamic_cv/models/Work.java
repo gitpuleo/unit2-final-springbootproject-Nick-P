@@ -16,7 +16,12 @@ public class Work {
 
     private String company;
     private String job_title;
-    private String location;
+
+    private String locationCity;
+
+    private String locationState;
+
+    private String locationCountry;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

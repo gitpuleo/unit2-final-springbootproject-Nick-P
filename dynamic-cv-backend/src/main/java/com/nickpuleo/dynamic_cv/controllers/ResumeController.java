@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 
-
+/*
 @RestController
 @RequestMapping("/api/resumes")
 public class ResumeController {
@@ -21,3 +21,5 @@ public class ResumeController {
          //in progress coding along with Carrie's lectures
     }
 }
+
+ */
