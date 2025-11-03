@@ -16,6 +16,8 @@ public class ResumeController {
     // GET http://localhost:8080/api/resumes
     @GetMapping("")
     public Collection<Resume> getAllResumes() {
-        // return Resumes.findAll(); from the database
+         return Resumes.findAll(); from the database;
+
+         //in progress coding along with Carrie's lectures
     }
 }

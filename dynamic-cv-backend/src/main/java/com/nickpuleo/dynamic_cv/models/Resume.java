@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-class Resume {
+public class Resume {
     @Id @GeneratedValue
     Long id;
 }
