@@ -12,18 +12,30 @@ import java.util.List;
 @RequestMapping("/skill")
 public class SkillController {
 
-    private final SkillRepository repo;
+    private final SkillRepository skillRepository;
 
-
-    // GET http://localhost:8080/api/skill
-    @GetMapping("")
-    public Collection<Skill> getAllSkills() {
-        return lll.getAll();
+    public SkillController(SkillRepository skillRepository) {
+        this.skillRepository = skillRepository;
     }
 
-
-    //POST
-    @PostMapping("/addskill")
-
-
+@PostMapping
+public List<Skill> getAllSkills() {
+        return skillRepository.findAll();
 }
+
+@GetMapping("/{id}")
+    public Skill getSkillById(@PathVariable Long id) {
+        return skillRepository.findById(id).orElseThrow(() -> new RuntimeException("Error retrieving data"));
+    }
+
+//@PutMapping("/{id}")
+    //public Skill
+}
+
+@DeleteMapping("/{id}")
+    public void deleteSkill(@PathVariable Long id) {
+        skillRepository.deleteById(id);
+    }
+}
+
+
