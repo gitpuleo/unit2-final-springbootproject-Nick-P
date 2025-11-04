@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table
-public class Awards {
+public class Award {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

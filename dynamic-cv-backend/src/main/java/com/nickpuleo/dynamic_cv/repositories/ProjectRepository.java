@@ -1,4 +1,9 @@
 package com.nickpuleo.dynamic_cv.repositories;
 
-public interface ProjectRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.nickpuleo.dynamic_cv.models.Project;
+
+public interface ProjectRepository extends JpaRepository<Project, Long> {
+
 }
