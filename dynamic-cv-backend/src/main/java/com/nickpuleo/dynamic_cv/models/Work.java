@@ -1,10 +1,8 @@
 package com.nickpuleo.dynamic_cv.models;
 
 import jakarta.persistence.*;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
-import java.util.List;
 import java.time.LocalDate;
+
 
 @Entity
 @Table
