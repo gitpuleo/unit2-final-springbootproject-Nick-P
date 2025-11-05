@@ -113,4 +113,13 @@ public class Education {
     public void setGpa(BigDecimal gpa) {
         this.gpa = gpa;
     }
+
+    public Resume getResume() {
+        return resume;
+    }
+
+    public void setResume(Resume resume) {
+        this.resume = resume;
+    }
+
 }

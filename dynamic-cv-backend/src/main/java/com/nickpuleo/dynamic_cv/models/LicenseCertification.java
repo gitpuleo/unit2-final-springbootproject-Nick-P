@@ -64,4 +64,5 @@ public class LicenseCertification {
     public void setResume(Resume resume) {
         this.resume = resume;
     }
+
 }

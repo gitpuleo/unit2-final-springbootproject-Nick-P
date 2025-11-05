@@ -57,4 +57,13 @@ public class Skill {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+    public Resume getResume() {
+        return resume;
+    }
+
+    public void setResume(Resume resume) {
+        this.resume = resume;
+    }
+
 }

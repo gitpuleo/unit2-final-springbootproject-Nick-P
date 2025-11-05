@@ -48,4 +48,13 @@ public class Language {
     public void setLevel(LanguageProficiency level) {
         this.level = level;
     }
+
+    public Resume getResume() {
+        return resume;
+    }
+
+    public void setResume(Resume resume) {
+        this.resume = resume;
+    }
+
 }

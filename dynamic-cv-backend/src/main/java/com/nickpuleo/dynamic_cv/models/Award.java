@@ -67,4 +67,13 @@ public class Award {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Resume getResume() {
+        return resume;
+    }
+
+    public void setResume(Resume resume) {
+        this.resume = resume;
+    }
+
 }

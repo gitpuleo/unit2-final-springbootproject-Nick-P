@@ -141,4 +141,13 @@ public class Work {
     public void setSummary(String summary) {
         this.summary = summary;
     }
+
+    public Resume getResume() {
+        return resume;
+    }
+
+    public void setResume(Resume resume) {
+        this.resume = resume;
+    }
+
 }

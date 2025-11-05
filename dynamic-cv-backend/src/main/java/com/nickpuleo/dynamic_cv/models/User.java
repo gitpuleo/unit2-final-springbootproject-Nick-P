@@ -107,4 +107,13 @@ public class User {
     public void setHeadline(String headline) {
         this.headline = headline;
     }
+
+    public List<Resume> getResumes() {
+        return resumes;
+    }
+
+    public void setResumes(List<Resume> resumes) {
+        this.resumes = resumes;
+    }
+
 }

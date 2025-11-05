@@ -56,4 +56,13 @@ public class Project {
     public void setLink(String link) {
         this.link = link;
     }
+
+    public Resume getResume() {
+        return resume;
+    }
+
+    public void setResume(Resume resume) {
+        this.resume = resume;
+    }
+
 }
