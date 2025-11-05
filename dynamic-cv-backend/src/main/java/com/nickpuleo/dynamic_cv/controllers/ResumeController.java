@@ -40,7 +40,7 @@ public List<Resume> getAll() {
     } repo.deleteById(id);
 }
 
-@PutMapping
+//@PutMapping
 
 
 }
