@@ -1,25 +1,50 @@
 package com.nickpuleo.dynamic_cv.controllers;
 
+import java.util.List;
 import com.nickpuleo.dynamic_cv.models.Resume;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.nickpuleo.dynamic_cv.repositories.ResumeRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 
-/*
 @RestController
-@RequestMapping("/api/resumes")
+@RequestMapping("/resumes")
 public class ResumeController {
 
-    //retrieve resume
-    // GET http://localhost:8080/api/resumes
-    @GetMapping("")
-    public Collection<Resume> getAllResumes() {
-         return Resumes.findAll(); from the database;
+    private final ResumeRepository repo;
 
-         //in progress coding along with Carrie's lectures
+    public ResumeController(ResumeRepository repo) {
+        this.repo = repo;
     }
+
+@GetMapping
+public List<Resume> getAll() {
+        return repo.findAll();
 }
 
- */
+@GetMapping("/{id}")
+    public Resume getOne(@PathVariable Long id) {
+        return repo.findById(id).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
+            org.springframework.http.HttpStatus.NOT_FOUND, "Data not found"));
+}
+
+@PostMapping
+    public Resume create(@RequestBody Resume body) {
+        return repo.save(body);
+}
+
+@DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+    if (!repo.existsById(id)) {
+        throw new org.springframework.web.server.ResponseStatusException(HttpStatus.NOT_FOUND, "Entry not found");
+    } repo.deleteById(id);
+}
+
+@PutMapping
+
+
+}
+
+
+
+//DTO per use case
