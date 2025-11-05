@@ -16,30 +16,30 @@ public class LanguageController {
         this.repo = repo;
     }
 
-@GetMapping
-public List<Language> getAll() {
+    @GetMapping
+    public List<Language> getAll() {
         return repo.findAll();
-}
+    }
 
-@GetMapping("/{id}")
+    @GetMapping("/{id}")
     public Language getOne(@PathVariable Long id) {
-    return repo.findById(id).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
-            org.springframework.http.HttpStatus.NOT_FOUND, "Data not found"));
-}
+        return repo.findById(id).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.NOT_FOUND, "Data not found"));
+    }
 
-@PostMapping
+    @PostMapping
     public Language create(@RequestBody Language body) {
         return repo.save(body);
-}
+    }
 
 //@Putmapping
 
 
-}
-
-@DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         if (!repo.existsById(id)) {
             throw new org.springframework.web.server.ResponseStatusException(HttpStatus.NOT_FOUND, "Entry not found");
-        } repo.deleteById(id);
+        }
+        repo.deleteById(id);
+    }
 }
