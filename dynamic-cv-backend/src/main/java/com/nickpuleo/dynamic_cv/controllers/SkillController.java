@@ -2,12 +2,13 @@ package com.nickpuleo.dynamic_cv.controllers;
 
 import com.nickpuleo.dynamic_cv.models.Skill;
 import com.nickpuleo.dynamic_cv.repositories.SkillRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
 @RestController
-@RequestMapping("/skill")
+@RequestMapping("/skills")
 public class SkillController {
 
     private final SkillRepository repo;
@@ -17,25 +18,32 @@ public class SkillController {
     }
 
 
-
-@PostMapping
-public List<Skill> getAllSkills() {
-        return SkillRepository.findAll();
+@GetMapping
+public List<Skill> getAll() {
+        return repo.findAll();
 }
 
 @GetMapping("/{id}")
-    public Skill getSkillById(@PathVariable Long id) {
-        return SkillRepository.findById(id).orElseThrow(() -> new RuntimeException("Error retrieving data"));
+    public Skill getOne(@PathVariable Long id) {
+        return repo.findById(id).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.NOT_FOUND, "Data not found"));
     }
 
-//@PutMapping("/{id}")
-    //public Skill
+@PostMapping
+public Skill create(@RequestBody Skill body) {
+    return repo.save(body);
+    }
+
+//@PutMapping
+
 }
 
 @DeleteMapping("/{id}")
-    public void deleteSkill(@PathVariable Long id) {
-        skillRepository.deleteById(id);
-    }
+    public void delete(@PathVariable Long id) {
+    if (!repo.existsById(id)) {
+        throw new org.springframework.web.server.ResponseStatusException(HttpStatus.NOT_FOUND, "Entry not found");
+    } repo.deleteById(id);
 }
+
 
 

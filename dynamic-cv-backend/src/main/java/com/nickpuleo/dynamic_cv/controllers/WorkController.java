@@ -14,7 +14,7 @@ public class WorkController {
     private final WorkRepository repo;
 
     public WorkController(WorkRepository repo) {
-        this.repo =repo;
+        this.repo = repo;
     }
 
 @GetMapping
@@ -38,7 +38,7 @@ public List<Work> getAll() {
         if (!repo.existsById(id)) {
             throw new org.springframework.web.server.ResponseStatusException(HttpStatus.NOT_FOUND, "Entry not found");
         } repo.deleteById(id);
-        }
+    }
 
 
 //@PutMapping
