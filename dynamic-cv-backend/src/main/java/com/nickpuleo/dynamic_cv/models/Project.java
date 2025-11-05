@@ -20,7 +20,7 @@ public class Project {
     //Relations
     @ManyToOne
     @JoinColumn(name = "resume_id", nullable = false)
-    private Project project;
+    private Resume resume;
 
 
     //Getters and Setters

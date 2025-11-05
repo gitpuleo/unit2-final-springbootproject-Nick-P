@@ -22,7 +22,7 @@ public class Award {
     //Relations
     @ManyToOne
     @JoinColumn(name = "resume_id", nullable = false)
-    private Award award;
+    private Resume resume;
 
     public Award() {}
 

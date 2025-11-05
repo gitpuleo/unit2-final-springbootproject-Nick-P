@@ -19,7 +19,7 @@ public class Language {
     //Relations
     @ManyToOne
     @JoinColumn(name = "resume_id", nullable = false)
-    private Language language;
+    private Resume resume;
 
     public Language() {}
 

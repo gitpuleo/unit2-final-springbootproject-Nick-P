@@ -20,7 +20,7 @@ public class Skill {
     //Relations
     @ManyToOne
     @JoinColumn(name = "resume_id", nullable = false)
-    private Skill skill;
+    private Resume resume;
 
     public Skill() {}
 

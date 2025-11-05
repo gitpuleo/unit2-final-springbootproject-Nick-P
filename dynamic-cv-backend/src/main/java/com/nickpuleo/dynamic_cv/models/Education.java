@@ -36,7 +36,7 @@ public class Education {
     //Relations
     @ManyToOne
     @JoinColumn(name = "resume_id", nullable = false)
-    private Education education;
+    private Resume resume;
 
     public Education() {}
 
