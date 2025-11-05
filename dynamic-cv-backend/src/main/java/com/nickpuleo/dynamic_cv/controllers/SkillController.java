@@ -34,16 +34,19 @@ public Skill create(@RequestBody Skill body) {
     return repo.save(body);
     }
 
-//@PutMapping
-
-}
-
-@DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-    if (!repo.existsById(id)) {
-        throw new org.springframework.web.server.ResponseStatusException(HttpStatus.NOT_FOUND, "Entry not found");
-    } repo.deleteById(id);
+        if (!repo.existsById(id)) {
+            throw new org.springframework.web.server.ResponseStatusException(HttpStatus.NOT_FOUND, "Entry not found");
+        } repo.deleteById(id);
+
 }
+
+//@Putmapping
+
+}
+
+
 
 
 
