@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 public class Resume {
     @Id @GeneratedValue
-    Long id;
+    private Long id;
 
 
     //Relation to
@@ -18,23 +18,32 @@ public class Resume {
 
     //Relation to child tables
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonManagedReference("resume-skill")
     private List<Skill> skills = new ArrayList<>();
 
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonManagedReference("resume-award")
     private List<Award> awards = new ArrayList<>();
 
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonManagedReference("resume-education")
     private List<Education> educations = new ArrayList<>();
 
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonManagedReference("resume-language")
     private List<Language> languages = new ArrayList<>();
 
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonManagedReference("resume-project")
     private List<Project> projects = new ArrayList<>();
 
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonManagedReference("resume-work")
     private List<Work> works = new ArrayList<>();
 
+    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonManagedReference("resume-license")
+    private List<LicenseCertification> licenses = new ArrayList<>();
 
 
     public Resume() {}
@@ -105,5 +114,11 @@ public class Resume {
         this.works = works;
     }
 
+    public List<LicenseCertification> getLicenses() {
+        return licenses;
+    }
 
+    public void setLicenses(List<LicenseCertification> licenses) {
+        this.licenses = licenses;
+    }
 }

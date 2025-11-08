@@ -2,9 +2,12 @@ package com.nickpuleo.dynamic_cv.controllers;
 
 import java.util.List;
 import com.nickpuleo.dynamic_cv.models.Resume;
+import com.nickpuleo.dynamic_cv.models.User;
 import com.nickpuleo.dynamic_cv.repositories.ResumeRepository;
+import com.nickpuleo.dynamic_cv.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
@@ -12,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 public class ResumeController {
 
     private final ResumeRepository repo;
+    private final UserRepository userRepo;
 
-    public ResumeController(ResumeRepository repo) {
+    public ResumeController(ResumeRepository repo, UserRepository userRepo) {
         this.repo = repo;
+        this.userRepo = userRepo;
     }
 
 @GetMapping
@@ -30,6 +35,11 @@ public List<Resume> getAll() {
 
 @PostMapping
     public Resume create(@RequestBody Resume body) {
+    if (body.getUser() != null && body.getUser().getId() != null) {
+        User existingUser = userRepo.findById(body.getUser().getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found"));
+        body.setUser(existingUser);
+    }
         return repo.save(body);
 }
 
@@ -40,11 +50,7 @@ public List<Resume> getAll() {
     } repo.deleteById(id);
 }
 
-//@PutMapping
-
-
 }
 
 
 
-//DTO per use case

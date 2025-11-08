@@ -22,6 +22,7 @@ public class Award {
     //Relations
     @ManyToOne
     @JoinColumn(name = "resume_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonBackReference("resume-award")
     private Resume resume;
 
     public Award() {}

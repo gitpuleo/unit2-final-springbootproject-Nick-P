@@ -19,6 +19,7 @@ public class Language {
     //Relations
     @ManyToOne
     @JoinColumn(name = "resume_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonBackReference("resume-language")
     private Resume resume;
 
     public Language() {}

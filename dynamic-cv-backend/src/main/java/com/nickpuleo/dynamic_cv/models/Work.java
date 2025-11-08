@@ -40,6 +40,7 @@ public class Work {
     //Relations
     @ManyToOne
     @JoinColumn(name = "resume_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonBackReference("resume-work")
     private Resume resume;
 
     public Work() {}
@@ -126,11 +127,11 @@ public class Work {
         this.endDate = endDate;
     }
 
-    public Boolean getCurrent() {
+    public Boolean getIsCurrent() {
         return isCurrent;
     }
 
-    public void setCurrent(Boolean current) {
+    public void setIsCurrent(Boolean current) {
         isCurrent = current;
     }
 

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table
@@ -28,6 +29,13 @@ public class Education {
 
     private String minor;
 
+    @Column(nullable = false)
+    private LocalDate startDate;
+
+    @Column(nullable = false)
+    private LocalDate endDate;
+
+
     @DecimalMin("0.00")
     @DecimalMax("4.00")
     @Column(precision = 3, scale = 2)
@@ -36,6 +44,7 @@ public class Education {
     //Relations
     @ManyToOne
     @JoinColumn(name = "resume_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonBackReference("resume-education")
     private Resume resume;
 
     public Education() {}
@@ -122,4 +131,19 @@ public class Education {
         this.resume = resume;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 }

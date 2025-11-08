@@ -20,6 +20,7 @@ public class Skill {
     //Relations
     @ManyToOne
     @JoinColumn(name = "resume_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonBackReference("resume-skill")
     private Resume resume;
 
     public Skill() {}

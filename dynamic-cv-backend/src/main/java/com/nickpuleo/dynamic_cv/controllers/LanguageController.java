@@ -2,18 +2,23 @@ package com.nickpuleo.dynamic_cv.controllers;
 
 import java.util.List;
 import com.nickpuleo.dynamic_cv.models.Language;
+import com.nickpuleo.dynamic_cv.models.Resume;
 import com.nickpuleo.dynamic_cv.repositories.LanguageRepository;
+import com.nickpuleo.dynamic_cv.repositories.ResumeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/language")
+@RequestMapping("/languages")
 public class LanguageController {
 
     private final LanguageRepository repo;
+    private final ResumeRepository resumeRepo;
 
-    public LanguageController(LanguageRepository repo) {
+    public LanguageController(LanguageRepository repo, ResumeRepository resumeRepo) {
         this.repo = repo;
+        this.resumeRepo = resumeRepo;
     }
 
     @GetMapping
@@ -29,11 +34,17 @@ public class LanguageController {
 
     @PostMapping
     public Language create(@RequestBody Language body) {
+        //validate correct resume, stop creation of new resumes by accident
+        if (body.getResume() == null || body.getResume().getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Resume id required");
+        }
+
+        Resume existingResume = resumeRepo.findById(body.getResume().getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Resume not found"));
+
+        body.setResume(existingResume);
         return repo.save(body);
     }
-
-//@Putmapping
-
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
@@ -42,4 +53,23 @@ public class LanguageController {
         }
         repo.deleteById(id);
     }
+    @PutMapping("/{id}")
+    public Language update(@PathVariable Long id, @RequestBody Language body) {
+        Language existing = repo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Language not found"));
+
+        // Logic for partial updating
+        if (body.getName() != null)           existing.setName(body.getName());
+        if (body.getLevel() != null)    existing.setLevel(body.getLevel()); // enum
+
+        // Logic for reattaching parent table
+        if (body.getResume() != null && body.getResume().getId() != null) {
+            Resume existingResume = resumeRepo.findById(body.getResume().getId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Resume not found"));
+            existing.setResume(existingResume);
+        }
+
+        return repo.save(existing);
+    }
+
 }

@@ -21,6 +21,7 @@ public class LicenseCertification {
     //Relation
     @ManyToOne
     @JoinColumn(name = "resume_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonBackReference("resume-license")
     private Resume resume;
 
     //Getters and Setters
