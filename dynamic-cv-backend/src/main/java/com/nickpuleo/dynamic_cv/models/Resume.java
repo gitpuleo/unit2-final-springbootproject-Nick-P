@@ -11,7 +11,7 @@ public class Resume {
     private Long id;
 
 
-    //Relation to
+    //Relation to parent
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -120,5 +120,70 @@ public class Resume {
 
     public void setLicenses(List<LicenseCertification> licenses) {
         this.licenses = licenses;
+    }
+
+//Helper methods to reign in table syncing issues
+
+public void addSkill(Skill skill) {
+    skills.add(skill);
+    skill.setResume(this);
+}
+    public void removeSkill(Skill skill) {
+        skills.remove(skill);
+        skill.setResume(null);
+    }
+
+    public void addAward(Award award) {
+        awards.add(award);
+        award.setResume(this);
+    }
+    public void removeAward(Award award) {
+        awards.remove(award);
+        award.setResume(null);
+    }
+
+    public void addEducation(Education education) {
+        educations.add(education);
+        education.setResume(this);
+    }
+    public void removeEducation(Education education) {
+        educations.remove(education);
+        education.setResume(null);
+    }
+
+    public void addLanguage(Language language) {
+        languages.add(language);
+        language.setResume(this);
+    }
+    public void removeLanguage(Language language) {
+        languages.remove(language);
+        language.setResume(null);
+    }
+
+    public void addProject(Project project) {
+        projects.add(project);
+        project.setResume(this);
+    }
+    public void removeProject(Project project) {
+        projects.remove(project);
+        project.setResume(null);
+    }
+
+    public void addWork(Work work) {
+        works.add(work);
+        work.setResume(this);
+    }
+    public void removeWork(Work work) {
+        works.remove(work);
+        work.setResume(null);
+    }
+
+    public void addLicense(LicenseCertification license) {
+        licenses.add(license);
+        license.setResume(this);
+    }
+    public void removeLicense(LicenseCertification license) {
+        licenses.remove(license);
+        license.setResume(null);
     }
 }
