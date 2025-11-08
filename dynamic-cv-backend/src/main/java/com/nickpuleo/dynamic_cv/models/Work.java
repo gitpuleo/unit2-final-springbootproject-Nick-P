@@ -55,14 +55,6 @@ public class Work {
         this.id = id;
     }
 
-    public Resume getResumes() {
-        return resume;
-    }
-
-    public void setResumes(Resume resume) {
-        this.resume = resume;
-    }
-
     public String getCompany() {
         return company;
     }
