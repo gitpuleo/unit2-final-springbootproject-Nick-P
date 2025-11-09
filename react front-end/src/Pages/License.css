@@ -1,0 +1,31 @@
+
+.img-class {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    transition: box-shadow .05s ease;
+}
+
+.img-class:hover {
+    box-shadow: 0 12px 20px rgba(181, 180, 108, 0.9);
+}
+
+.download-paragraph {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.main-div {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding-top: 2.5rem;
+}
+
+.main-div h2 {
+    font-size: 24px;
+    padding-top: 1rem;
+}

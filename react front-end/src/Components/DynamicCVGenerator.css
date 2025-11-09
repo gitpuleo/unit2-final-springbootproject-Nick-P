@@ -1,0 +1,34 @@
+
+.landing-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 100vh;
+
+}
+
+
+.page-format {
+    display: flex;
+    flex-direction: row;
+    min-height: 60vh;
+    width: 100%;
+    align-items: flex-start;
+}
+
+
+
+
+.cv-format {
+    flex-grow: 1;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+
+.query-form {
+    text-align: center;
+    
+}

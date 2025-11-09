@@ -1,0 +1,70 @@
+
+
+
+.intro-lander {
+  padding-top: 1.5rem;
+}
+
+.intro-lander h1 {
+  font-size: 26px;
+  padding-left: 1rem;
+}
+
+.intro-lander h2 {
+  font-size: 22px;
+  padding-left: 1rem;
+
+}
+
+.intro-lander h3 {
+  text-decoration: underline dotted #723f3f;
+}
+
+.intro-lander p {
+  max-width: 800px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 2rem;
+  line-height: 1.6;
+}
+
+.sidenav {
+  width: 132px;
+  background-color: #252525;
+  padding: 0rem;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+
+.main-format {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+.main-cv {
+    flex-grow: 1;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+
+
+@media (max-width: 768px) {
+  .main-format {
+    flex-direction: column;
+  }
+
+  .sidenav {
+    width: 100%;
+    height: auto;
+  }
+
+  .main-cv {
+    padding: 1rem;
+  }
+}
+

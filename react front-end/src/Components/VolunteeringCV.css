@@ -1,0 +1,12 @@
+.volunteering {
+    margin-top: 2rem;
+    text-align: left !important;
+}
+
+.volunteering ul, .volunteering li {
+    width: 100%;
+}
+
+.volunteering p {
+    text-align: left !important;
+}
