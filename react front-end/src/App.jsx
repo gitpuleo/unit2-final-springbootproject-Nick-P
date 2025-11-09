@@ -8,6 +8,9 @@ import License from './Pages/License'
 import Contact from './Pages/Contact'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
+console.log("API base:", import.meta.env.VITE_API_URL);
+
+
 function App() {
 
   return (
