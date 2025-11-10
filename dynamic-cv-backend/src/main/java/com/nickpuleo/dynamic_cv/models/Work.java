@@ -14,7 +14,7 @@ public class Work {
 
     private String company;
 
-    private String job_title;
+    private String jobTitle;
 
     private String locationCity;
 
@@ -63,13 +63,11 @@ public class Work {
         this.company = company;
     }
 
-    public String getJob_title() {
-        return job_title;
+    public String getJobTitle() {
+        return jobTitle;
     }
 
-    public void setJob_title(String job_title) {
-        this.job_title = job_title;
-    }
+    public void setJobTitle(String jobTitle) {this.jobTitle = jobTitle;}
 
     public String getLocationCity() {
         return locationCity;

@@ -62,7 +62,7 @@ public List<Work> getAll() {
 
         // logic for partial updating
         if (body.getCompany() != null) existingWork.setCompany(body.getCompany());
-        if (body.getJob_title() != null) existingWork.setJob_title(body.getJob_title());
+        if (body.getJobTitle() != null) existingWork.setJobTitle(body.getJobTitle());
         if (body.getLocationCity() != null) existingWork.setLocationCity(body.getLocationCity());
         if (body.getLocationState() != null) existingWork.setLocationState(body.getLocationState());
         if (body.getLocationCountry() != null) existingWork.setLocationCountry(body.getLocationCountry());

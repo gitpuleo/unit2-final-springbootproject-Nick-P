@@ -14,6 +14,7 @@ public class Resume {
     //Relation to parent
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @com.fasterxml.jackson.annotation.JsonBackReference("user-resume")  //backref to handle recursion in JSON
     private User user;
 
     //Relation to child tables

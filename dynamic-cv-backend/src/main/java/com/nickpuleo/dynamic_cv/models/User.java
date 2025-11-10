@@ -17,6 +17,7 @@ public class User {
 
     //Relations
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonManagedReference("user-resume")  //backref for managing recursion in JSON
     private List<Resume> resumes = new ArrayList<>();
 
 
