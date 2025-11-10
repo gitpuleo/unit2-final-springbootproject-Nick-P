@@ -7,7 +7,7 @@ import About from './Pages/About'
 import License from './Pages/License'
 import Contact from './Pages/Contact'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-
+import ResumeDisplay from './new components/ResumeDisplay.jsx'
 
 function App() {
 
@@ -17,15 +17,18 @@ function App() {
     <Router>
        <div className="app">
    <Header />
-    
+    <main style={{ flex: 1}}>
+
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/About" element={<About />} />
-        <Route path="/License" element={<License />} />
-        <Route path="/Contact" element={<Contact />} />
+        <Route path="/resume/:id" element={<ResumeDisplay/>} />
+
+        <Route path="/about" element={<About />} />
+        <Route path="/license" element={<License />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     
-      <main style={{ flex: 1}}>
+      
 
       </main>
 
