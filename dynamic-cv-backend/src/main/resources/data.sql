@@ -25,6 +25,8 @@ ALTER TABLE license_certification AUTO_INCREMENT = 1;
 
 --seed database with dummy resume for testing
 
+INSERT INTO users (id, first_name, last_name, email, phone, website, linkedin, headline)
+VALUES (1, 'Dummy', 'User', 'lclbakelite@example.com', NULL, NULL, NULL, 'Demo resume');
 
 
 INSERT INTO resume (id, user_id) VALUES (1, 1);
