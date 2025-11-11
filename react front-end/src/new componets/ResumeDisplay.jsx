@@ -62,7 +62,7 @@ export default function ResumeViewer() {
   {userErr && <p>{userErr}</p>}
   {user && (
     <>
-      <h1 style={{ margin: 0 }}>
+      <h1>
         {user.firstName} {user.lastName}
       </h1>
       <p>
@@ -73,7 +73,7 @@ export default function ResumeViewer() {
       {user.headline && <p style={{ opacity: .85 }}>{user.headline}</p>}
     </>
   )}
-  
+
     </header>
 
     <section>
