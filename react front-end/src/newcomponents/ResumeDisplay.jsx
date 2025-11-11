@@ -1,12 +1,31 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 
 
-const API_BASE = import.meta.env.VITE_API_URL; //current reading api from .env file
- const USER_ID = 1; //make userid 1 for demoing
+
+const API_BASE = import.meta.env.VITE_API_URL;   //current reading api from .env file
+const USER_ID = import.meta.env.VITE_USER_ID;   //setting the user id until log-in and auth are added
 
 
 export default function ResumeDisplay() {
+
+
+  //Temporary selector before it becomes a separate component
+  const ALL_SECTIONS = ["work","skills","projects","education","languages","awards","licenses"];
+  const [visible, setVisible] = useState(new Set(["work","skills","projects","education","languages","awards","licenses"]));
+
+  function toggle(sectionKey) {
+    setVisible(prev => {
+      const next = new Set(prev);
+      next.has(sectionKey) ? next.delete(sectionKey) : next.add(sectionKey);
+      return next;
+    });
+  }
+    
+  const { id: routeId } = useParams();    //now the id is not hardcoded
+  const resumeId = routeId?.trim();       //for handling spacing that might disrupt reading
+
   const [resume, setResume] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
@@ -14,6 +33,15 @@ export default function ResumeDisplay() {
   const [user, setUser] = useState(null);
   const [userErr, setUserErr] = useState("");
   const [userLoading, setUserLoading] = useState(true);
+
+  //for copying link to users clipboard
+function handleCopyLink() {
+  const currentUrl = window.location.href;
+  navigator.clipboard
+    .writeText(currentUrl)
+    .then(() => alert("Link copied to clipboard"))
+    .catch(() => alert("FAIL"));
+}
 
 //pulling headline details from users table
 useEffect(() => {
@@ -42,7 +70,7 @@ useEffect(() => {
         setIsLoading(true);
         setErrorMsg("");
 
-        const response = await fetch(`${API_BASE}/resumes/1`, {signal: controller.signal,});
+        const response = await fetch(`${API_BASE}/resumes/${resumeId}`, {signal: controller.signal,});
         if (!response.ok) throw new Error(`Server responded ${response.status}`);
         
         const resumeData = await response.json();
@@ -58,7 +86,7 @@ useEffect(() => {
 
     fetchResume();
     return () => controller.abort();
-  }, []);
+  }, [resumeId]);
 
   // logic for rendering the resume
   if (isLoading) return <p>Loading resume…</p>;
@@ -88,6 +116,24 @@ useEffect(() => {
 
     </header>
 
+  <div style={{ display: "flex", flexWrap: "wrap", gap: ".75rem", margin: "1rem 0" }}>
+    {ALL_SECTIONS.map(key => (
+      <label key={key} style={{ display: "inline-flex", alignItems: "center", gap: ".35rem" }}>
+        <input
+          type="checkbox"
+          checked={visible.has(key)}
+          onChange={() => toggle(key)}
+        />
+        {key[0].toUpperCase() + key.slice(1)}
+      </label>
+    ))}
+    <div style={{ marginTop: "1rem" }}>
+  <button onClick={handleCopyLink}>Copy Shareable Link</button>
+</div>
+
+  </div>
+
+{visible.has("work") && (
     <section>
         <h2>Work Experience</h2>
         <ul>
@@ -98,7 +144,9 @@ useEffect(() => {
           ))}
         </ul>
       </section>
+)}
 
+{visible.has("education") && (
  <section>
         <h2>Education</h2>
         <ul>
@@ -109,8 +157,10 @@ useEffect(() => {
           ))}
         </ul>
       </section>
+)}
 
-      <section>
+    {visible.has("skills") && (
+        <section>
         <h2>Skills</h2>
         <ul>
           {resume.skills.map((skill) => (
@@ -120,7 +170,9 @@ useEffect(() => {
           ))}
         </ul>
       </section>
+  )}
 
+  {visible.has("projects") && (
       <section>
         <h2>Projects</h2>
         <ul>
@@ -131,7 +183,9 @@ useEffect(() => {
           ))}
         </ul>
       </section>
+  )}
 
+ {visible.has("licenses") && (
       <section>
         <h2>Licenses & Certifications</h2>
         <ul>
@@ -140,7 +194,8 @@ useEffect(() => {
           ))}
         </ul>
       </section>
-
+ )}
+ {visible.has("languages") && (
       <section>
         <h2>Languages</h2>
         <ul>
@@ -149,7 +204,9 @@ useEffect(() => {
           ))}
         </ul>
       </section>
+    )}
 
+{visible.has("awards") && (
       <section>
         <h2>Awards & Honors</h2>
         <ul>
@@ -158,7 +215,7 @@ useEffect(() => {
           ))}
         </ul>
       </section>
-
+)}
      
     </div>
   );

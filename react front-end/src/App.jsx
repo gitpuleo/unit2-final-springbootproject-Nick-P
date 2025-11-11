@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router'
 import './App.css'
 import LandingPage from './Pages/LandingPage'
 import Footer from './Components/Footer'
@@ -7,7 +7,7 @@ import About from './Pages/About'
 import License from './Pages/License'
 import Contact from './Pages/Contact'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import ResumeDisplay from './new components/ResumeDisplay.jsx'
+import ResumeDisplay from './newcomponents/ResumeDisplay.jsx'
 
 function App() {
 
@@ -21,7 +21,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/resume/:id" element={<ResumeDisplay/>} />
+        <Route path="/resumes/:id" element={<ResumeDisplay />} />
 
         <Route path="/about" element={<About />} />
         <Route path="/license" element={<License />} />
