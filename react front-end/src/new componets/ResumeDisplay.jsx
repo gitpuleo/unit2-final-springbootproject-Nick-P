@@ -1,19 +1,39 @@
-import { useEffect, useState, useMemo } from "react";
-import { education } from "../utils/nfpCVData";
+import { useEffect, useState } from "react";
+
 
 
 const API_BASE = import.meta.env.VITE_API_URL; //current reading api from .env file
  const USER_ID = 1; //make userid 1 for demoing
 
 
-export default function ResumeViewer() {
+export default function ResumeDisplay() {
   const [resume, setResume] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
-  const [user, setUser] = useState(true);
+    
+  const [user, setUser] = useState(null);
+  const [userErr, setUserErr] = useState("");
+  const [userLoading, setUserLoading] = useState(true);
 
-   
+//pulling headline details from users table
+useEffect(() => {
+  const controller = new AbortController();
+  (async () => {
+    try {
+      setUserLoading(true);
+      const response = await fetch(`${API_BASE}/users/${USER_ID}`, { signal: controller.signal });
+      if (!response.ok) throw new Error(`User ${response.status}`);
+      setUser(await response.json());
+    } catch (error) {
+      if (error.name !== "AbortError") setUserErr(error.message || "Failed to load user");
+    } finally {
+      setUserLoading(false);
+    }
+  })();
+  return () => controller.abort();
+}, []);
 
+//for resume
   useEffect(() => {
     const controller = new AbortController();
 
@@ -23,19 +43,14 @@ export default function ResumeViewer() {
         setErrorMsg("");
 
         const response = await fetch(`${API_BASE}/resumes/1`, {signal: controller.signal,});
+        if (!response.ok) throw new Error(`Server responded ${response.status}`);
+        
         const resumeData = await response.json();
         setResume(resumeData);
-
-        if (!response.ok) throw new Error(`Server responded ${response.status}`);
-
-
-
-
-        const userId = await response.json();
-        setResume(data);
-      } catch (err) {
-        if (err.name === "AbortError") return; //this should help handle aborts by not throwing errors
-        setErrorMsg(err.message || "Failed to fetch resume");
+      
+      } catch (error) {
+        if (error.name === "AbortError") return; //this should help handle aborts by not throwing errors
+        setErrorMsg(error.message || "Failed to fetch resume");
       } finally {
         setIsLoading(false);
       }
@@ -47,16 +62,13 @@ export default function ResumeViewer() {
 
   // logic for rendering the resume
   if (isLoading) return <p>Loading resume…</p>;
-  if (errorMsg) return <p style={{ color: "crimson" }}>{errorMsg}</p>;
+  if (errorMsg) return <p>{errorMsg}</p>;
   if (!resume) return <p>Data not found.</p>;
 
   return (
     <div style={{ maxWidth: "800px", margin: "2rem auto" }}>
-      <h1>Resume #{resume.id}</h1>
 
-
-
-    <header>
+    <header> 
 
   {userLoading && <p>Loading header…</p>}
   {userErr && <p>{userErr}</p>}
@@ -65,12 +77,12 @@ export default function ResumeViewer() {
       <h1>
         {user.firstName} {user.lastName}
       </h1>
-      <p>
+      <h2>
         {user.email && <a href={`mailto:${user.email}`}>{user.email}</a>}
         {user.website && <> • <a href={user.website} target="_blank" rel="noreferrer">{user.website}</a></>}
         {user.linkedin && <> • <a href={user.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></>}
-      </p>
-      {user.headline && <p style={{ opacity: .85 }}>{user.headline}</p>}
+      </h2>
+      {user.headline && <p style={{ opacity: .8 }}>{user.headline}</p>}
     </>
   )}
 
@@ -92,7 +104,7 @@ export default function ResumeViewer() {
         <ul>
           {resume.educations.map((education) => (
             <li key={education.id}>
-              {education.degree} in {education.major}, {eduaction.schoolName} ({eduaction.startDate}–{eduaction.endDate})
+              {education.degree} in {education.major}, {education.schoolName} ({education.startDate}–{education.endDate})
             </li>
           ))}
         </ul>
