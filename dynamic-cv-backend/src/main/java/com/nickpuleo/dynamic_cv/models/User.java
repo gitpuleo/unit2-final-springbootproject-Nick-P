@@ -17,7 +17,8 @@ public class User {
 
     //Relations
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @com.fasterxml.jackson.annotation.JsonManagedReference("user-resume")  //backref for managing recursion in JSON
+    @com.fasterxml.jackson.annotation.JsonIgnore     //for leaving off resume when accessing user info for headline
+    // @com.fasterxml.jackson.annotation.JsonManagedReference("user-resume")  //backref for managing recursion in JSON
     private List<Resume> resumes = new ArrayList<>();
 
 
@@ -36,7 +37,7 @@ public class User {
     @Column(length = 50)
     private String phone;
 
-    //Leave without annotation for now to see if works without when testing w/ Postman
+    //Leave without annotation for now to see if works without when testing w/ Postman  --Update: seems to work just fine
     private String website;
     private String linkedin;
     private String headline;
