@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import SectionSelector from "./newcomponents/SectionSelector";
+import SectionSelector from "./SectionSelector";
 
 
 
@@ -11,7 +11,7 @@ const USER_ID = import.meta.env.VITE_USER_ID;   //setting the user id until log-
 export default function ResumeDisplay() {
   
   const { id: routeId } = useParams();    //now the id is not hardcoded
-  const resumeId = routeId?.trim();       //for handling spacing that might disrupt reading
+  const resumeId = routeId ? routeId.trim() : "";       //for handling spacing that might disrupt reading
   
   //state variables for switching in selector
   const [showWork, setShowWork] = useState(true);
@@ -132,7 +132,7 @@ return (
         showWorkProfessional={showWorkProfessional} setShowWorkProfessional={setShowWorkProfessional}
         showWorkInternship={showWorkInternship} setShowWorkInternship={setShowWorkInternship}
         showWorkVolunteer={showWorkVolunteer} setShowWorkVolunteer={setShowWorkVolunteer}
-        showWorkServicer={showWorkService} setShowWorkService={setShowWorkService}
+        showWorkService={showWorkService} setShowWorkService={setShowWorkService}
   />
 
   <button onClick={handleCopyLink} style={{ marginBottom: "1rem" }}>
@@ -143,7 +143,7 @@ return (
         <section>
 
           <h2>Work Experience</h2>
-          {resume.works && resume.works.filter(function(work){ return work.type === "PROFESSIONAL"; }).length > 0 && (
+          {showWorkProfessional && resume.works && resume.works.filter(function(work){ return work.type === "PROFESSIONAL"; }).length > 0 && (
       <>
         <h3>Professional</h3>
         <ul>
@@ -158,7 +158,7 @@ return (
       </>
     )}
 
-    {resume.works && resume.works.filter(function(work){ return work.type === "INTERNSHIP"; }).length > 0 && (
+    {showWorkInternship && resume.works && resume.works.filter(function(work){ return work.type === "INTERNSHIP"; }).length > 0 && (
       <>
         <h3>Internships</h3>
         <ul>
@@ -174,7 +174,7 @@ return (
     )}
 
   
-    {resume.works && resume.works.filter(function(work){ return work.type === "VOLUNTEER"; }).length > 0 && (
+    {showWorkVolunteer && resume.works && resume.works.filter(function(work){ return work.type === "VOLUNTEER"; }).length > 0 && (
       <>
         <h3>Volunteer</h3>
         <ul>
@@ -189,7 +189,7 @@ return (
       </>
     )}
 
-    {resume.works && resume.works.filter(function(work){ return work.type === "VOLUNTEER"; }).length > 0 && (
+    {showWorkService && resume.works && resume.works.filter(function(work){ return work.type === "SERVICE"; }).length > 0 && (
       <>
         <h3>Service</h3>
         <ul>

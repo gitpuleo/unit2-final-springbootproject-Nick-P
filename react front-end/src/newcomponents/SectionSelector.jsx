@@ -46,7 +46,7 @@ export default function SectionSelector(props) {
             />{" "}
             Volunteer
           </label>
-        </div>
+        
           <label>
             <input
               type="checkbox"
@@ -56,7 +56,7 @@ export default function SectionSelector(props) {
             />{" "}
             Service
           </label>
-        
+        </div>
 
       <label>
         <input
