@@ -10,7 +10,8 @@ function NavBar() {
                 <Link className="active" to="/">Landing Page</Link>
                 <Link to="/About">About</Link>
                 <Link to="/License">License</Link>
-                <Link to="/Contact">Contact Me</Link>
+                <Link to="/resumes/:id">Resume View</Link>
+
             </nav>
             <h2 className="header-site-title">Dynamic CV</h2>
         </div>

@@ -23,6 +23,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/resumes/:id" element={<ResumeDisplay />} />
 
+
         <Route path="/about" element={<About />} />
         <Route path="/license" element={<License />} />
         <Route path="/contact" element={<Contact />} />
