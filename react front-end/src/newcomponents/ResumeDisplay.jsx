@@ -21,6 +21,12 @@ export default function ResumeDisplay() {
   const [showLanguages, setShowLanguages] = useState(true);
   const [showAwards, setShowAwards] = useState(true);
   const [showLicenses, setShowLicenses] = useState(true);
+
+  //Sub-sections of work category
+  const [showWorkProfessional, setShowWorkProfessional] = useState(true);
+  const [showWorkInternship, setShowWorkInternship] = useState(true);
+  const [showWorkVolunteer, setShowWorkVolunteer] = useState(true);
+  const [showWorkService, setShowWorkService] = useState(true);
   
   //For handling pulling user details for resume headline
   const [user, setUser] = useState(null);
@@ -116,13 +122,17 @@ return (
   </header>
 
   <SectionSelector
-        showWork={showWork}        setShowWork={setShowWork}
+        showWork={showWork} setShowWork={setShowWork}
         showEducation={showEducation} setShowEducation={setShowEducation}
-        showSkills={showSkills}    setShowSkills={setShowSkills}
+        showSkills={showSkills} setShowSkills={setShowSkills}
         showProjects={showProjects} setShowProjects={setShowProjects}
         showLanguages={showLanguages} setShowLanguages={setShowLanguages}
-        showAwards={showAwards}    setShowAwards={setShowAwards}
+        showAwards={showAwards} setShowAwards={setShowAwards}
         showLicenses={showLicenses} setShowLicenses={setShowLicenses}
+        showWorkProfessional={showWorkProfessional} setShowWorkProfessional={setShowWorkProfessional}
+        showWorkInternship={showWorkInternship} setShowWorkInternship={setShowWorkInternship}
+        showWorkVolunteer={showWorkVolunteer} setShowWorkVolunteer={setShowWorkVolunteer}
+        showWorkServicer={showWorkService} setShowWorkService={setShowWorkService}
   />
 
   <button onClick={handleCopyLink} style={{ marginBottom: "1rem" }}>
@@ -131,7 +141,7 @@ return (
 
       {showWork && (
         <section>
-          
+
           <h2>Work Experience</h2>
           {resume.works && resume.works.filter(function(work){ return work.type === "PROFESSIONAL"; }).length > 0 && (
       <>
