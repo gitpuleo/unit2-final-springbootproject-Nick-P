@@ -234,7 +234,7 @@ return (
         <section>
           <h2>Projects</h2>
           <ul>
-            {(resume.projects || []).map(p => (
+            {(resume.projects || []).map(project => (
               <li key={project.id}>
                 <a href={project.link} target="_blank" rel="noreferrer">{project.name}</a>: {project.description}
               </li>
