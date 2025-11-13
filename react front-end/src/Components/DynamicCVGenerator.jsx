@@ -1,20 +1,6 @@
-import { education } from "../utils/nfpCVData";
-import EducationCV from "./EducationCV";
-import { workHistory } from "../utils/nfpCVData";
-import WorkHistoryCV from "./WorkHistoryCV";
-import { myWriting } from "../utils/nfpCVData"
-import MyWritingCV from "./MyWritingCV";
-import { technicalSkills } from "../utils/nfpCVData";
-import TechnicalSkillsCV from "./TechnicalSkillsCV";
-import { licensesCertifications } from "../utils/nfpCVData";
-import LicensesAndCertificationsCV from "./LicensesAndCertificationsCV";
-import { volunteering } from "../utils/nfpCVData";
-import VolunteeringCV from "./VolunteeringCV";
-import { interests } from "../utils/nfpCVData";
-import InterestsCV from "./InterestsCV";
-import { myPhotos } from "../utils/nfpCVData";
-import MyPhotosCV from './MyPhotosCV';
-import './DynamicCVGenerator.css';
+//not used, but not removed because removal breaks the app
+
+
 import MultiUseForm from "./MultiUseForm";
 import { useState } from "react";
 
