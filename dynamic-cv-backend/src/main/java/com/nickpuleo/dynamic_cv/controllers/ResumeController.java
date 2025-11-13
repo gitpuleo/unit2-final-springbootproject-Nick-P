@@ -1,5 +1,9 @@
 package com.nickpuleo.dynamic_cv.controllers;
 
+//importing work model and repository to define endpoint
+import com.nickpuleo.dynamic_cv.repositories.WorkRepository;
+import com.nickpuleo.dynamic_cv.models.Work;
+
 import java.util.List;
 import com.nickpuleo.dynamic_cv.models.Resume;
 import com.nickpuleo.dynamic_cv.models.User;
@@ -16,10 +20,12 @@ public class ResumeController {
 
     private final ResumeRepository repo;
     private final UserRepository userRepo;
+    private final WorkRepository workRepo;
 
-    public ResumeController(ResumeRepository repo, UserRepository userRepo) {
+    public ResumeController(ResumeRepository repo, UserRepository userRepo, WorkRepository workRepo) {
         this.repo = repo;
         this.userRepo = userRepo;
+        this.workRepo = workRepo;
     }
 
 @GetMapping
@@ -42,6 +48,17 @@ public List<Resume> getAll() {
     }
         return repo.save(body);
 }
+//nested endpoint postmapping
+@PostMapping("/{resumeId}/works")
+public Work addWorkToResume(@PathVariable Long resumeId, @RequestBody Work body) {
+        Resume resume = repo.findById(resumeId).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No such Resume"
+        ));
+        body.setId(null);
+        body.setResume(resume);
+        return workRepo.save(body);
+}
+
 
 @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
