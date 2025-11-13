@@ -4,14 +4,14 @@ html, body {
 }
 
 p {
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 #root {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: rgb(230, 225, 225);
+    background-color: rgb(122, 133, 136);
 }
 
 body {

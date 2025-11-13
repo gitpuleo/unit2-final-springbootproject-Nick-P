@@ -1,13 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRef } from "react";
 
 const API_BASE = import.meta.env.VITE_API_URL;
+const USER_ID = import.meta.env.VITE_USER_ID;
 
 //Component for inputting(post) a new resume through forms, including editing(put) and delete functionality
 export default function ResumeForm() {
 
 
 const [active, setActive] = useState("work");
+
+//state for validation warning
+const [workError, setWorkError] = useState("");
+
+//state for creating new resume entry
+const [resumeId, setResumeId] = useState(null);
+
+//logic to instantiate new entry in resume table
+useEffect(() => {
+  async function createResume() {
+    const response = await fetch(API_BASE + "/resumes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user: { id: USER_ID } })
+    });
+
+    if (!response.ok) {
+      alert("Process failed");
+      return;
+    }
+
+    const data = await response.json();
+    setResumeId(data.id);
+  }
+
+  createResume();
+}, []);
+
+
 
 //auto-scroll references
 const workRef = useRef(null);
@@ -50,9 +80,7 @@ let nextMap = { work: "education", education: "skills", skills: "projects", proj
   }
 }
 
-
   //state variables for handling adding entries
-
   const [workEntries, setWorkEntries] = useState([
     {
       id: null,
@@ -69,11 +97,7 @@ let nextMap = { work: "education", education: "skills", skills: "projects", proj
     }
   ]);
 
-
-
-
   //functions for adding/removing entries in form
-
   function addWorkRow() {
     setWorkEntries(function (prev) { 
       const next = prev.slice();
@@ -138,11 +162,38 @@ async function handleDeleteWork(index) {
 
 //PUT and POST for work section
 async function saveWorkSection() {
-  try {
-    for (let i = 0; i < workEntries.length; i++) {
-      const item = workEntries[i];
 
-      //payload is the data sent in the request
+  const rowsToSave = workEntries.filter((item) => {
+    const hasText =
+      (item.company && item.company.trim() !== "") ||
+      (item.jobTitle && item.jobTitle.trim() !== "") ||
+      (item.locationCity && item.locationCity.trim() !== "") ||
+      (item.locationState && item.locationState.trim() !== "") ||
+      (item.locationCountry && item.locationCountry.trim() !== "") ||
+      (item.summary && item.summary.trim() !== "");
+
+    const hasDates = !!item.startDate || !!item.endDate;
+
+    return hasText || hasDates;
+  });
+  //warning for date validation
+  setWorkError("");
+
+  for (let i = 0; i < rowsToSave.length; i++) {
+    const item = rowsToSave[i];
+
+    if (!item.isCurrent && !item.endDate) {
+      setWorkError(
+        `For Job #${i + 1}, please either provide an end date or mark 'I currently work here'.`
+      );
+      return;
+    }
+  }
+
+  try {
+    for (let i = 0; i < rowsToSave.length; i++) {
+      const item = rowsToSave[i];
+
       const payload = {
         company: item.company,
         jobTitle: item.jobTitle,
@@ -151,62 +202,54 @@ async function saveWorkSection() {
         locationCountry: item.locationCountry,
         type: item.type,
         startDate: item.startDate,
-        endDate: item.endDate,
+        endDate: item.isCurrent ? null : item.endDate,
         isCurrent: item.isCurrent,
-        summary: item.summary
+        summary: item.summary,
       };
 
-      let response;
+      // If id already exists, use PUT to update
+      if (item.id) {
+        const response = await fetch(`${API_BASE}/works/${item.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
 
-      if (item.id == null) {
-        response = await fetch(
-          API_BASE + "/resumes/" + RESUME_ID + "/works",
+        if (!response.ok) {
+          alert(
+            `Failed to update work entry #${i + 1} (status ${response.status}).`
+          );
+          return;
+        }
+      }
+
+      // If id not found, use POST to create
+      else {
+        const response = await fetch(
+          `${API_BASE}/resumes/${resumeId}/works`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
           }
         );
-      } else {  //else statement allows PUT in place of POST if item.id check shows checked id exists
-        response = await fetch(
-          API_BASE + "/works/" + item.id,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-          }
-        );
+
+        if (!response.ok) {
+          alert(
+            `Failed to create work entry #${i + 1} (status ${response.status}).`
+          );
+          return;
+        }
       }
-
-      if (!response.ok) {
-        alert("Save Failed");
-        return;
-      }
-
-      // pull new id
-      const saved = await response.json();
-
-      // state handling
-      setWorkEntries(function (prev) {
-        const next = prev.slice();
-        const copy = Object.assign({}, next[i]);
-        copy.id = saved.id; // assume backend returns { id: ..., ... }
-        next[i] = copy;
-        return next;
-      });
     }
 
-    //error handling given complexity
+    alert("Work history saved!");
     advance("work");
-  } catch (error) {
-    console.error(error);
-    alert("Error saving work entries");
+
+  } catch (err) {
+    alert("A network error occurred while saving work history.");
   }
 }
-
-
-
-
 
         return (
 
@@ -219,8 +262,20 @@ async function saveWorkSection() {
           aria-controls="panel-work"
         >
           Work History
+                       
         </button>
-
+ {workError && (
+    <p style={{
+    color: "#b91c1c",             
+    backgroundColor: "#fee2e2",     
+    border: "1px solid #fecaca",     
+    padding: "0.5rem 0.75rem",
+    marginBottom: "0.75rem",
+    borderRadius: "4px",
+    fontSize: "0.9rem",}}>
+    {workError}
+    </p>
+)}
         {active === "work" && (
           <div id="panel-work">
 
