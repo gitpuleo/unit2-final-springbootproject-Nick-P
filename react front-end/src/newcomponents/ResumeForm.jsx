@@ -171,7 +171,7 @@ function handleViewResume() {
     return;
   }
 
-  navigate(`/resumes/${resumeId}`);
+  navigateButton(`/resumes/${resumeId}`);
 }
 
 

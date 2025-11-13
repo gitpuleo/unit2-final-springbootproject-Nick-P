@@ -15,7 +15,7 @@ function License() {
             <p className="download-paragraph">Click on Ray's glasses to download: </p>
             <a href="https://github.com/gitpuleo/unit1-final-reactproject-Nick-P" target="_blank">
             <img 
-            alt="Click on the picture to visit the project GitHub" 
+            alt="A picture of glasses on a counter reflecting a neon beer sign; click the image to visit the project GitHub" 
             src={raysplace} 
             className="img-class"
             width="400" height="400"
