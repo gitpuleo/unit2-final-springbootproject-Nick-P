@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SectionSelector from "./SectionSelector";
-
+import { useNavigate } from "react-router-dom";
 
 
 const API_BASE = import.meta.env.VITE_API_URL;   //current reading api from .env file
@@ -10,8 +10,9 @@ const USER_ID = import.meta.env.VITE_USER_ID;   //setting the user id until log-
 
 export default function ResumeDisplay() {
   
-  const { id: routeId } = useParams();    //now the id is not hardcoded
-  const resumeId = routeId ? routeId.trim() : "";       //for handling spacing that might disrupt reading
+  const { id: routeId } = useParams();    //now the id is not hardcoded, ready for auth implementation
+  const resumeId = routeId ? routeId.trim() : "";     //for handling spacing that might disrupt reading
+   const navigate = useNavigate(); //for resume selector drop-down 
   
   //state variables for switching in selector
   const [showWork, setShowWork] = useState(true);
@@ -37,6 +38,18 @@ export default function ResumeDisplay() {
   const [resume, setResume] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
+
+  //resume selector drop-down
+function handleResumeSelect(event) {
+    var selectedValue = event.target.value;
+
+    if (selectedValue === "new") {
+      navigate("/resumes/new");
+    } else {
+      navigate("/resumes/" + selectedValue);
+    }
+  }
+
 
   //for copying link to users clipboard
 function handleCopyLink() {
@@ -101,7 +114,23 @@ useEffect(() => {
 
 
 return (
-    <div style={{ maxWidth: "800px", margin: "2rem auto" }}>
+
+  
+    <div className="container">
+
+    <div style={{ margin: "1rem 0" }}>
+        <label>
+          Select resume:{" "}
+          <select value={resumeId} onChange={handleResumeSelect}>
+            <option value="" disabled>Select Resume</option>
+            <option value="1">Resume 1</option>
+            <option value="2">Resume 2</option>
+            <option value="new">New Resume</option>
+          </select>
+        </label>
+      </div>
+
+      <button onClick={handleCopyLink}>Copy Shareable Link</button>
 
   <header> 
   {userLoading && <p>Loading header…</p>}
@@ -120,7 +149,7 @@ return (
     </>
   )}
   </header>
-
+<div className="card">
   <SectionSelector
         showWork={showWork} setShowWork={setShowWork}
         showEducation={showEducation} setShowEducation={setShowEducation}
@@ -135,13 +164,12 @@ return (
         showWorkService={showWorkService} setShowWorkService={setShowWorkService}
   />
 
-  <button onClick={handleCopyLink} style={{ marginBottom: "1rem" }}>
-        Copy Shareable Link
-  </button>
 
+</div>
       {showWork && (
-        <section>
+        <section className="card">
 
+          
           <h2>Work Experience</h2>
           {showWorkProfessional && resume.works && resume.works.filter(function(work){ return work.type === "PROFESSIONAL"; }).length > 0 && (
       <>
@@ -155,6 +183,7 @@ return (
             );
           })}
         </ul>
+       
       </>
     )}
 
@@ -207,7 +236,7 @@ return (
       )}
 
       {showEducation && (
-        <section>
+        <section className="card">
           <h2>Education</h2>
           <ul>
             {(resume.educations || []).map(education => (
@@ -220,7 +249,7 @@ return (
       )}
 
       {showSkills && (
-        <section>
+        <section className="card">
           <h2>Skills</h2>
           <ul>
             {(resume.skills || []).map(skill => (
@@ -231,7 +260,7 @@ return (
       )}
 
       {showProjects && (
-        <section>
+        <section className="card">
           <h2>Projects</h2>
           <ul>
             {(resume.projects || []).map(project => (
@@ -244,7 +273,7 @@ return (
       )}
 
       {showLanguages && (
-        <section>
+        <section className="card">
           <h2>Languages</h2>
           <ul>
             {(resume.languages || []).map(language => (
@@ -255,7 +284,7 @@ return (
       )}
 
       {showAwards && (
-        <section>
+        <section className="card">
           <h2>Awards & Honors</h2>
           <ul>
             {(resume.awards || []).map(award => (
@@ -266,7 +295,7 @@ return (
       )}
 
       {showLicenses && (
-        <section>
+        <section className="card">
           <h2>Licenses & Certifications</h2>
           <ul>
             {(resume.licenses || []).map(license => (

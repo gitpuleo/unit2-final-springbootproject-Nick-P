@@ -1,0 +1,38 @@
+:root{
+  --bg: #0f1115;
+  --panel: #151823;
+  --text: #e7e9ee;
+  --muted: #a7adbb;
+  --accent: #6ea8fe;
+
+  --radius: 14px;
+  --shadow: 0 8px 24px rgba(0,0,0,.25);
+  --space-1: .5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+}
+
+html, body { background: var(--bg); color: var(--text); font-family: ui-sans-serif, system-ui, Segoe UI, Roboto, Arial; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container { max-width: 900px; margin: 2rem auto; padding: 0 var(--space-2); }
+
+header { margin-bottom: var(--space-3); }
+header h1 { margin: 0 0 .25rem 0; font-size: 2rem; }
+header h2 { margin: 0; font-weight: 500; color: var(--muted); font-size: 1rem; }
+
+.card {
+  background: var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+section > h2 { margin: 0 0 .5rem 0; font-size: 1.25rem; }
+ul { margin: 0; padding-left: 1.25rem; }
+details[open] summary { margin-bottom: .5rem; }
+summary { list-style: none; cursor: pointer; }
+summary::-webkit-details-marker { display: none; }
+
