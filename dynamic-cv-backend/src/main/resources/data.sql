@@ -56,8 +56,50 @@ INSERT INTO project (id, name, description, link, resume_id) VALUES
 
 
 INSERT INTO work (id, company, job_title, location_city, location_state, location_country, type, start_date, end_date, is_current, summary, resume_id) VALUES
-(1, 'LaunchCode', 'Java Dev', 'St. Louis', 'MO', 'USA', 'PROFESSIONAL', '2023-06-01', '2024-08-31', 0, 'Spring Boot APIs and React UI', 1);
+(1, 'LaunchCode', 'Java Dev', 'St. Louis', 'MO', 'USA', 'PROFESSIONAL', '2023-06-01', '2024-08-31', false, 'Spring Boot APIs and React UI', 1);
 
 
 INSERT INTO license_certification (id, name, institution, description, resume_id) VALUES
 (1, 'AWS Cloud Practitioner', 'AWS', 'Foundational certification', 1);
+
+
+
+--Second resume to test switcher
+
+INSERT INTO resume (id, user_id) VALUES (2, 1);
+
+
+INSERT INTO work (id, resume_id, company, job_title, location_city, location_state, location_country, type, start_date, end_date, is_current, summary)
+VALUES
+  (2, 2, 'Civic Lab', 'Research Fellow', 'St. Louis', 'MO', 'USA', 'SERVICE', '2021-01-01', '2021-12-31', false, 'Community data mapping'),
+  (3, 2, 'OpenSource Co.', 'Frontend Intern', 'Remote', NULL, 'USA', 'INTERNSHIP', '2020-06-01', '2020-08-31', false, 'React component library');
+
+
+INSERT INTO skill (id, resume_id, skill_name, level, notes)
+VALUES
+  (4, 2, 'TypeScript', 'INTERMEDIATE', 'Personal projects'),
+  (5, 2, 'React', 'ADVANCED', 'Hooks, Router');
+
+
+INSERT INTO education (id, resume_id, school_name, location_state, location_city, location_country, degree, major, minor, start_date, end_date, gpa)
+VALUES
+  (2, 2, 'Local University', 'MO', 'St. Louis', 'USA', 'M.A.', 'Public Policy', NULL, '2019-08-20', '2021-05-15', 3.70);
+
+
+INSERT INTO project (id, resume_id, name, description, link)
+VALUES
+  (2, 2, 'Civic Dashboard', 'Leaflet + Spring Boot public data dashboard', 'https://example.com/civic');
+
+
+INSERT INTO language (id, resume_id, name, level)
+VALUES
+  (3, 2, 'Spanish', 'ADVANCED');
+
+
+INSERT INTO award (id, resume_id, name, issuer, issue_date, description)
+VALUES
+  (2, 2, 'Community Impact Grant', 'Civic Fund', '2021-10-01', 'Recognized for data outreach');
+
+INSERT INTO license_certification (id, resume_id, name, institution, description)
+VALUES
+  (2, 2, 'Scrum Fundamentals', 'ScrumStudy', 'Intro to agile scrum');
