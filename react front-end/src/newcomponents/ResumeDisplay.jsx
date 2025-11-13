@@ -41,7 +41,7 @@ export default function ResumeDisplay() {
 
   //resume selector drop-down
 function handleResumeSelect(event) {
-    var selectedValue = event.target.value;
+    let selectedValue = event.target.value;
 
     if (selectedValue === "new") {
       navigate("/resumes/new");
