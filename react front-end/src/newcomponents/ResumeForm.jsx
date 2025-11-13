@@ -455,8 +455,55 @@ async function saveWorkSection() {
         </button>
         {active === "education" && (
           <div id="panel-education">
-            {/* Education form fields */}
-            <button type="button" onClick={function(){ /* save */ advance("education"); }}>
+            <div>
+            <label>
+              School / Institution<br />
+              <input type="text"/>
+            </label>
+            <br />
+
+            <label>
+              Degree / Program<br />
+              <input type="text" />
+            </label>
+            <br />
+
+            <label>
+              Field of Study<br />
+              <input type="text"/>
+            </label>
+            <br />
+
+            <label>
+              City<br />
+              <input type="text"/>
+            </label>
+            <br />
+
+            <label>
+              Country<br />
+              <input type="text"/>
+            </label>
+            <br />
+
+            <label>
+              Start Date<br />
+              <input type="date"/>
+            </label>
+            <br />
+
+            <label>
+              End Date<br />
+              <input type="date"/>
+            </label>
+            <br />
+
+            <label>
+              Notes <br />
+              <textarea />
+            </label>
+          </div>
+            <button type="button" onClick={function(){ /* save logic */ advance("education"); }}>
               Save & Continue
             </button>
           </div>
@@ -474,8 +521,30 @@ async function saveWorkSection() {
         </button>
         {active === "skills" && (
           <div id="panel-skills">
-            {/* Skills form fields */}
-            <button type="button" onClick={function(){ /* save */ advance("skills"); }}>
+            <div>
+                <label>
+              Skill Name<br />
+              <input type="text" name="skillName" />
+            </label>
+            <br />
+
+            <label>
+              Level<br />
+              <select name="skillLevel">
+                <option value="">Select level</option>
+                <option value="BEGINNER">Beginner</option>
+                <option value="INTERMEDIATE">Intermediate</option>
+                <option value="ADVANCED">Advanced</option>
+                <option value="EXPERT">Expert</option>
+              </select>
+            </label>
+            <br />
+            <label>
+              Notes<br />
+              <textarea />
+            </label>
+            </div>
+            <button type="button" onClick={function(){ /* save logic*/ advance("skills"); }}>
               Save & Continue
             </button>
           </div>
@@ -493,8 +562,25 @@ async function saveWorkSection() {
         </button>
         {active === "projects" && (
           <div id="panel-projects">
-            {/* project form fields */}
-            <button type="button" onClick={function(){ /* save */ advance("projects"); }}>
+            <div>
+               <label>
+              Project Name<br />
+              <input type="text" />
+            </label>
+            <br />
+
+            <label>
+              Link (GitHub / Live Site)<br />
+              <input type="url" />
+            </label>
+            <br />
+
+            <label>
+              Description<br />
+              <textarea />
+            </label> 
+            </div>
+            <button type="button" onClick={function(){ /* save logic */ advance("projects"); }}>
               Save & Continue
             </button>
           </div>
@@ -512,8 +598,27 @@ async function saveWorkSection() {
         </button>
         {active === "languages" && (
           <div id="panel-languages">
-            {/* language form fields */}
-            <button type="button" onClick={function(){ /* save */ advance("languages"); }}>
+            <div>
+               <label>
+              Language<br />
+              <input type="text" />
+            </label>
+            <br />
+
+            <label>
+              Proficiency<br />
+              <select name="languageLevel">
+                <option value="">Select level</option>
+                <option value="BEGINNER">Beginner</option>
+                <option value="INTERMEDIATE">Intermediate</option>
+                <option value="ADVANCED">Advanced</option>
+                <option value="NATIVE">Native</option>
+              </select>
+            </label>
+            <br />
+
+            </div>
+            <button type="button" onClick={function(){ /* savelogic */ advance("languages"); }}>
               Save & Continue
             </button>
           </div>
@@ -531,7 +636,25 @@ async function saveWorkSection() {
         </button>
         {active === "awards" && (
           <div id="panel-awards">
-            {/* award form fields */}
+            <div>
+               <label>
+              Award Title<br />
+              <input type="text" />
+            </label>
+            <br />
+
+            <label>
+              Organization<br />
+              <input type="text"/>
+            </label>
+            <br />
+
+            <label>
+              Date<br />
+              <input type="date" />
+            </label>
+            <br />  
+            </div>
             <button type="button" onClick={function(){ /* save */ advance("awards"); }}>
               Save & Continue
             </button>
@@ -550,7 +673,26 @@ async function saveWorkSection() {
         </button>
         {active === "licenses" && (
           <div id="panel-licenses">
-            {/* license form fields */}
+            <div>
+                <label>
+              Name<br />
+              <input type="text" />
+            </label>
+            <br />
+
+            <label>
+              Issuing Organization<br />
+              <input type="text" />
+            </label>
+            <br />
+
+            <label>
+              Issue Date<br />
+              <input type="date"/>
+            </label>
+            <br />
+
+            </div>
             <button type="button" onClick={function(){ /* save */ advance("licenses"); }}>
               Save & Finish
             </button>
