@@ -50,6 +50,7 @@ function handleResumeSelect(event) {
     }
   }
 
+  
 
   //for copying link to users clipboard
 function handleCopyLink() {
@@ -58,6 +59,23 @@ function handleCopyLink() {
     .writeText(currentUrl)
     .then(() => alert("Link copied to clipboard"))
     .catch(() => alert("FAIL"));
+}
+
+//delete entire resume
+async function handleDeleteResume() {
+  try {
+    const response = await fetch(`${API_BASE}/resumes/${resumeId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      return; 
+    }
+
+    navigate("/"); 
+  } catch (error) {
+
+  }
 }
 
 
@@ -131,7 +149,7 @@ return (
       </div>
 
       <button onClick={handleCopyLink}>Copy Shareable Link</button>
-
+      <button type="button" onClick={handleDeleteResume}>Delete this resume</button>
   <header> 
   {userLoading && <p>Loading header…</p>}
   {userError && <p>{userError}</p>}
@@ -178,7 +196,17 @@ return (
           {resume.works.filter(function(work){ return work.type === "PROFESSIONAL"; }).map(function(work){
             return (
               <li key={work.id}>
-                <strong>{work.jobTitle}</strong>, {work.company} ({work.startDate}–{work.endDate})
+                <strong>{work.jobTitle}</strong>, {work.company}
+            <br />
+            <span>
+              {work.locationCity}, {work.locationState}, {work.locationCountry}
+            </span>
+            <br />
+            <span>
+              {work.startDate} – {work.isCurrent ? "Present" : work.endDate}
+            </span>
+            <br />
+            {work.summary && <p>{work.summary}</p>}
               </li>
             );
           })}
@@ -194,7 +222,17 @@ return (
           {resume.works.filter(function(work){ return work.type === "INTERNSHIP"; }).map(function(work){
             return (
               <li key={work.id}>
-                <strong>{work.jobTitle}</strong>, {work.company} ({work.startDate}–{work.endDate})
+                <strong>{work.jobTitle}</strong>, {work.company}
+            <br />
+            <span>
+              {work.locationCity}, {work.locationState}, {work.locationCountry}
+            </span>
+            <br />
+            <span>
+              {work.startDate} – {work.isCurrent ? "Present" : work.endDate}
+            </span>
+            <br />
+            {work.summary && <p>{work.summary}</p>}
               </li>
             );
           })}
@@ -210,7 +248,17 @@ return (
           {resume.works.filter(function(work){ return work.type === "VOLUNTEER"; }).map(function(work){
             return (
               <li key={work.id}>
-                <strong>{work.jobTitle}</strong>, {work.company} ({work.startDate}–{work.endDate})
+                <strong>{work.jobTitle}</strong>, {work.company}
+            <br />
+            <span>
+              {work.locationCity}, {work.locationState}, {work.locationCountry}
+            </span>
+            <br />
+            <span>
+              {work.startDate} – {work.isCurrent ? "Present" : work.endDate}
+            </span>
+            <br />
+            {work.summary && <p>{work.summary}</p>}
               </li>
             );
           })}
@@ -225,7 +273,17 @@ return (
           {resume.works.filter(function(work){ return work.type === "SERVICE"; }).map(function(work){
             return (
               <li key={work.id}>
-                <strong>{work.jobTitle}</strong>, {work.company} ({work.startDate}–{work.endDate})
+                <strong>{work.jobTitle}</strong>, {work.company}
+            <br />
+            <span>
+              {work.locationCity}, {work.locationState}, {work.locationCountry}
+            </span>
+            <br />
+            <span>
+              {work.startDate} – {work.isCurrent ? "Present" : work.endDate}
+            </span>
+            <br />
+            {work.summary && <p>{work.summary}</p>}
               </li>
             );
           })}
