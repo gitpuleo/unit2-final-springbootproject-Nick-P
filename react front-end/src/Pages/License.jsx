@@ -13,7 +13,7 @@ function License() {
             <p>In fact, you are obligated to.</p>
             <br/>
             <p className="download-paragraph">Click on Ray's glasses to download: </p>
-            <a href="https://github.com/gitpuleo/unit1-final-reactproject-Nick-P" target="_blank">
+            <a href="https://github.com/gitpuleo/unit2-final-springbootproject-Nick-P/tree/main" target="_blank">
             <img 
             alt="A picture of glasses on a counter reflecting a neon beer sign; click the image to visit the project GitHub" 
             src={raysplace} 

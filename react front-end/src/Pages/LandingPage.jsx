@@ -8,7 +8,7 @@ function LandingPage() {
     return(
 
    
-        <main>
+        <main className='card'>
             
             <header>
               <h1>Welcome to Dynamic CV!</h1>

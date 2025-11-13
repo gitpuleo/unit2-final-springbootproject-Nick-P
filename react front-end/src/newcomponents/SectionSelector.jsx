@@ -3,7 +3,7 @@
 export default function SectionSelector(props) {
   return (
     <details style={{ margin: "1rem 0" }}>
-      <summary style={{ cursor: "pointer" }}>Section Selector</summary>
+      <summary style={{ cursor: "pointer" }}>Section Selector ▼</summary>
 
       <div style={{ display: "flex", flexDirection: "column", gap: ".5rem", marginTop: ".5rem" }}>
        
