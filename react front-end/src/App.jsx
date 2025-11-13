@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router'
-//import './App.css'
-import './theme.css'
+import './App.css';
 import LandingPage from './Pages/LandingPage'
 import Footer from './Components/Footer'
 import Header from './Components/Header'

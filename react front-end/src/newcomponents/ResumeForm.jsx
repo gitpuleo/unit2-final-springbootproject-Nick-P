@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_URL;
 const USER_ID = import.meta.env.VITE_USER_ID;
@@ -15,6 +16,10 @@ const [workError, setWorkError] = useState("");
 
 //state for creating new resume entry
 const [resumeId, setResumeId] = useState(null);
+
+//hook for navigating to completed resume
+const navigateButton = useNavigate();
+
 
 //logic to instantiate new entry in resume table
 useEffect(() => {
@@ -157,6 +162,16 @@ async function handleDeleteWork(index) {
   }
 
   removeWorkRow(index);
+}
+
+//logic for linking to resume completed from entry form
+function handleViewResume() {
+  if (!resumeId) {
+    alert("No resume to display yet. Please start the form first.");
+    return;
+  }
+
+  navigate(`/resumes/${resumeId}`);
 }
 
 
@@ -440,6 +455,17 @@ async function saveWorkSection() {
             >
               Save & Continue
             </button>
+
+{resumeId && (
+  <button
+    type="button"
+    onClick={handleViewResume}
+    style={{ marginLeft: "1rem" }}
+  >
+    View This Resume
+  </button>
+)}
+
           </div>
         )}
       </section>
