@@ -9,9 +9,9 @@ function NavBar() {
             <nav>
                 <Link className="active" to="/">Landing Page</Link>
                 <Link to="/About">About</Link>
-                <Link to="/License">License</Link>
                 <Link to="/resumes/1">Resume View</Link>
-
+                <Link to="/License">License</Link>
+                
             </nav>
             <h2 className="header-site-title">Dynamic CV</h2>
         </div>

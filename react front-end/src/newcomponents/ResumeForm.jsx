@@ -22,7 +22,8 @@ let nextMap = { work: "education", education: "skills", skills: "projects", proj
 
   //methods for auto-advancing accordians open and closed
   function toggle(key) {
-    if (active === key) setActive(""); else setActive(key);
+    setActive(key);
+    scrollToSection(key);
   }
 
   function advance(fromKey) {
@@ -125,8 +126,8 @@ async function handleDeleteWork(index) {
     return;
   }
 
-  const resume = await fetch(API_BASE + "/works/" + item.id, { method: "DELETE" });
-  if (!resume.ok) {
+  const response = await fetch(API_BASE + "/works/" + item.id, { method: "DELETE" });
+  if (!response.ok) {
     alert("Operation Failed");
     return;
   }
@@ -135,28 +136,82 @@ async function handleDeleteWork(index) {
 }
 
 
-//put and post handler? 
+//PUT and POST for work section
+async function saveWorkSection() {
+  try {
+    for (let i = 0; i < workEntries.length; i++) {
+      const item = workEntries[i];
+
+      //payload is the data sent in the request
+      const payload = {
+        company: item.company,
+        jobTitle: item.jobTitle,
+        locationCity: item.locationCity,
+        locationState: item.locationState,
+        locationCountry: item.locationCountry,
+        type: item.type,
+        startDate: item.startDate,
+        endDate: item.endDate,
+        isCurrent: item.isCurrent,
+        summary: item.summary
+      };
+
+      let response;
+
+      if (item.id == null) {
+        response = await fetch(
+          API_BASE + "/resumes/" + RESUME_ID + "/works",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          }
+        );
+      } else {  //else statement allows PUT in place of POST if item.id check shows checked id exists
+        response = await fetch(
+          API_BASE + "/works/" + item.id,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          }
+        );
+      }
+
+      if (!response.ok) {
+        alert("Save Failed");
+        return;
+      }
+
+      // pull new id
+      const saved = await response.json();
+
+      // state handling
+      setWorkEntries(function (prev) {
+        const next = prev.slice();
+        const copy = Object.assign({}, next[i]);
+        copy.id = saved.id; // assume backend returns { id: ..., ... }
+        next[i] = copy;
+        return next;
+      });
+    }
+
+    //error handling given complexity
+    advance("work");
+  } catch (error) {
+    console.error(error);
+    alert("Error saving work entries");
+  }
+}
 
 
 
-  return (
-    <div className="container">
 
-      <section className="card">
-        <button
-          type="button"
-          onClick={function(){ toggle("work"); }}
-          aria-expanded={active === "work"}
-          aria-controls="panel-work"
-        >
-          Work History
-        </button>
 
-        {active === "work" && (
-          <div id="panel-work">
-              return (
+        return (
+
         <div className="container">
-        <section className="card">
+        <section className="card" ref={workRef}>
         <button
           type="button"
           onClick={function(){ toggle("work"); }}
@@ -324,8 +379,7 @@ async function handleDeleteWork(index) {
             <button
               type="button"
               onClick={function () {
-                // TODO: here you will POST/PUT workEntries to backend
-                advance("work");
+                saveWorkSection();
               }}
               style={{ marginLeft: "1rem" }}
             >
@@ -335,7 +389,7 @@ async function handleDeleteWork(index) {
         )}
       </section>
 
-      <section className="card">
+      <section className="card" ref={educationRef}>
         <button
           type="button"
           onClick={function(){ toggle("education"); }}
@@ -354,7 +408,7 @@ async function handleDeleteWork(index) {
         )}
       </section>
 
-      <section className="card">
+      <section className="card" ref={skillsRef}>
         <button
           type="button"
           onClick={function(){ toggle("skills"); }}
@@ -373,7 +427,7 @@ async function handleDeleteWork(index) {
         )}
       </section>
       
-      <section className="card">
+      <section className="card" ref={projectsRef}>
         <button
           type="button"
           onClick={function(){ toggle("projects"); }}
@@ -392,7 +446,7 @@ async function handleDeleteWork(index) {
         )}
       </section>
 
-      <section className="card">
+      <section className="card" ref={languagesRef}>
         <button
           type="button"
           onClick={function(){ toggle("languages"); }}
@@ -411,7 +465,7 @@ async function handleDeleteWork(index) {
         )}
       </section>
 
-      <section className="card">
+      <section className="card" ref={awardsRef}>
         <button
           type="button"
           onClick={function(){ toggle("awards"); }}
@@ -430,7 +484,7 @@ async function handleDeleteWork(index) {
         )}
       </section>
 
-      <section className="card">
+      <section className="card" ref={licensesRef}>
         <button
           type="button"
           onClick={function(){ toggle("licenses"); }}
@@ -443,7 +497,7 @@ async function handleDeleteWork(index) {
           <div id="panel-licenses">
             {/* license form fields */}
             <button type="button" onClick={function(){ /* save */ advance("licenses"); }}>
-              Save & Continue
+              Save & Finish
             </button>
           </div>
         )}
