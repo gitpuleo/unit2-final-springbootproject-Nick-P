@@ -16,6 +16,7 @@ function About() {
             </p>
             <p>Like my work? There is a tip button on my GitHub profile.</p>
             <p>Find the link on the License page.</p>
+            <p>Enjoy and be good.</p>
         </div>
     )
 }
