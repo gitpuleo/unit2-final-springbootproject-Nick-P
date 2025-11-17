@@ -102,6 +102,57 @@ let nextMap = { work: "education", education: "skills", skills: "projects", proj
     }
   ]);
 
+  //state for education section of form
+  const [educationForm, setEducationForm] = useState({
+  schoolName: "",
+  degree: "",
+  major: "",
+  minor: "",
+  locationCity: "",
+  locationState: "",
+  locationCountry: "",
+  startDate: "",
+  endDate: "",
+  gpa: ""
+});
+
+//skills states
+const [skillForm, setSkillForm] = useState({
+  skillName: "",
+  level: "",     
+  notes: ""  
+});
+
+//project states
+const [projectForm, setProjectForm] = useState({
+  name: "",
+  description: "",
+  link: ""
+});
+
+//language states
+const [languageForm, setLanguageForm] = useState({
+  name: "",
+  level: "", // must match your enum values!
+});
+
+//award states
+const [awardForm, setAwardForm] = useState({
+  name: "",
+  issuer: "",
+  issueDate: "",
+  description: ""
+});
+
+//licesnes states
+const [licenseForm, setLicenseForm] = useState({
+  name: "",
+  institution: "",
+  description: ""
+});
+
+
+
   //functions for adding/removing entries in form
   function addWorkRow() {
     setWorkEntries(function (prev) { 
@@ -265,6 +316,233 @@ async function saveWorkSection() {
     alert("A network error occurred while saving work history.");
   }
 }
+
+//education save logic
+const saveEducationSection = async () => {
+  if (!educationForm.schoolName.trim()) {
+    return;
+  }
+
+  // convert gpa to a number or null
+  const gpaValue = educationForm.gpa.trim();
+  const gpaNumeric = gpaValue === "" ? null : Number(gpaValue);
+
+  const payload = {
+    ...educationForm,
+    gpa: gpaNumeric,
+    resume: { id: Number(resumeId) },
+  };
+
+  try {
+    const response = await fetch(`${API_BASE}/educations`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to save education", await response.text());
+      return;
+    }
+
+    const saved = await response.json();
+
+    setEducationForm({
+      schoolName: "",
+      degree: "",
+      major: "",
+      minor: "",
+      locationCity: "",
+      locationState: "",
+      locationCountry: "",
+      startDate: "",
+      endDate: "",
+      gpa: "",
+    });
+  } catch (err) {
+    console.error("Network error saving education", err);
+  }
+};
+
+
+//skills save logic
+const saveSkillSection = async () => {
+  if (!skillForm.skillName.trim()) {
+    return;
+  }
+
+  const payload = {
+    ...skillForm,
+    resume: { id: Number(resumeId) }, 
+  };
+
+  try {
+    const response = await fetch(`${API_BASE}/skills`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to save skill", await response.text());
+      return;
+    }
+
+    const saved = await response.json();
+    
+
+    setSkillForm({
+      skillName: "",
+      level: "",
+      notes: "",
+    });
+  } catch (err) {
+    console.error("Network error saving skill", err);
+  }
+};
+
+//project save logic
+const saveProjectSection = async () => {
+  if (!projectForm.name.trim()) {
+    return;
+  }
+
+  const payload = {
+    ...projectForm,
+    resume: { id: Number(resumeId) },
+  };
+
+  try {
+    const response = await fetch(`${API_BASE}/projects`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to save project", await response.text());
+      return;
+    }
+
+    const saved = await response.json();
+
+    setProjectForm({
+      name: "",
+      description: "",
+      link: "",
+    });
+  } catch (err) {
+    console.error("Network error saving project", err);
+  }
+};
+
+//languages save logic
+const saveLanguageSection = async () => {
+  if (!languageForm.name.trim()) {
+    return;
+  }
+
+  const payload = {
+    ...languageForm,
+    resume: { id: Number(resumeId) },
+  };
+
+  try {
+    const response = await fetch(`${API_BASE}/languages`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to save language", await response.text());
+      return;
+    }
+
+    const saved = await response.json();
+
+    setLanguageForm({
+      name: "",
+      level: "",
+    });
+  } catch (err) {
+    console.error("Network error saving language", err);
+  }
+};
+
+//awards save logic
+const saveAwardSection = async () => {
+  if (!awardForm.name.trim()) {
+    return;
+  }
+
+  const payload = {
+    ...awardForm,
+    resume: { id: Number(resumeId) },
+  };
+
+  try {
+    const response = await fetch(`${API_BASE}/awards`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to save award", await response.text());
+      return;
+    }
+
+    const saved = await response.json();
+
+    setAwardForm({
+      name: "",
+      issuer: "",
+      issueDate: "",
+      description: "",
+    });
+  } catch (err) {
+    console.error("Network error saving award", err);
+  }
+};
+
+//licenses save logic
+const saveLicenseSection = async () => {
+  if (!licenseForm.name.trim()) {
+    return;
+  }
+
+  const payload = {
+    ...licenseForm,
+    resume: { id: Number(resumeId) },
+  };
+
+  try {
+    const response = await fetch(`${API_BASE}/licenses`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to save license/certification", await response.text());
+      return;
+    }
+
+    const saved = await response.json();
+
+    setLicenseForm({
+      name: "",
+      institution: "",
+      description: "",
+    });
+  } catch (err) {
+    console.error("Network error saving license/certification", err);
+  }
+};
+
+
+//JSX
 
         return (
 
@@ -456,16 +734,6 @@ async function saveWorkSection() {
               Save & Continue
             </button>
 
-{resumeId && (
-  <button
-    type="button"
-    onClick={handleViewResume}
-    style={{ marginLeft: "1rem" }}
-  >
-    View This Resume
-  </button>
-)}
-
           </div>
         )}
       </section>
@@ -484,57 +752,134 @@ async function saveWorkSection() {
             <div>
             <label>
               School / Institution<br />
-              <input type="text"/>
-            </label>
-            <br />
+              <input type="text"
+              value={educationForm.schoolName}
+              onChange={e =>
+              setEducationForm(prev => ({
+                ...prev,
+                schoolName: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
 
-            <label>
-              Degree / Program<br />
-              <input type="text" />
-            </label>
-            <br />
+        <label>
+          Degree / Program<br />
+          <input
+            type="text"
+            value={educationForm.degree}
+            onChange={e =>
+              setEducationForm(prev => ({
+                ...prev,
+                degree: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
 
-            <label>
-              Field of Study<br />
-              <input type="text"/>
-            </label>
-            <br />
+        <label>
+          Field of Study<br />
+          <input
+            type="text"
+            value={educationForm.major}
+            onChange={e =>
+              setEducationForm(prev => ({
+                ...prev,
+                major: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
 
-            <label>
-              City<br />
-              <input type="text"/>
-            </label>
-            <br />
+        <label>
+          City<br />
+          <input
+            type="text"
+            value={educationForm.locationCity}
+            onChange={e =>
+              setEducationForm(prev => ({
+                ...prev,
+                locationCity: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
 
-            <label>
-              Country<br />
-              <input type="text"/>
-            </label>
-            <br />
+        <label>
+          Country<br />
+          <input
+            type="text"
+            value={educationForm.locationCountry}
+            onChange={e =>
+              setEducationForm(prev => ({
+                ...prev,
+                locationCountry: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
 
-            <label>
-              Start Date<br />
-              <input type="date"/>
-            </label>
-            <br />
+        <label>
+          Start Date<br />
+          <input
+            type="date"
+            value={educationForm.startDate}
+            onChange={e =>
+              setEducationForm(prev => ({
+                ...prev,
+                startDate: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
 
-            <label>
-              End Date<br />
-              <input type="date"/>
-            </label>
-            <br />
+        <label>
+          End Date<br />
+          <input
+            type="date"
+            value={educationForm.endDate}
+            onChange={e =>
+              setEducationForm(prev => ({
+                ...prev,
+                endDate: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
+    
+    <label>
+  GPA (numbers only)<br />
+  <input
+    type="number"
+    step="0.01"
+    value={educationForm.gpa}
+    onChange={e =>
+      setEducationForm(prev => ({
+        ...prev,
+        gpa: e.target.value,
+      }))
+    }
+  />
+</label>
+      </div>
 
-            <label>
-              Notes <br />
-              <textarea />
-            </label>
-          </div>
-            <button type="button" onClick={function(){ /* save logic */ advance("education"); }}>
-              Save & Continue
-            </button>
-          </div>
-        )}
-      </section>
+      <button
+        type="button"
+        onClick={ async function () { await saveEducationSection();
+          advance("education"); }}
+      >
+        Save & Continue
+      </button>
+    </div>
+  )}
+</section>   
 
       <section className="card" ref={skillsRef}>
         <button
@@ -545,37 +890,70 @@ async function saveWorkSection() {
         >
           Skills
         </button>
-        {active === "skills" && (
-          <div id="panel-skills">
-            <div>
-                <label>
-              Skill Name<br />
-              <input type="text" name="skillName" />
-            </label>
-            <br />
+       {active === "skills" && (
+    <div id="panel-skills">
+      <div>
+        <label>
+          Skill<br />
+          <input
+            type="text"
+            value={skillForm.skillName}
+            onChange={e =>
+              setSkillForm(prev => ({
+                ...prev,
+                skillName: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
 
-            <label>
-              Level<br />
-              <select name="skillLevel">
-                <option value="">Select level</option>
-                <option value="BEGINNER">Beginner</option>
-                <option value="INTERMEDIATE">Intermediate</option>
-                <option value="ADVANCED">Advanced</option>
-                <option value="EXPERT">Expert</option>
-              </select>
-            </label>
-            <br />
-            <label>
-              Notes<br />
-              <textarea />
-            </label>
-            </div>
-            <button type="button" onClick={function(){ /* save logic*/ advance("skills"); }}>
-              Save & Continue
-            </button>
-          </div>
-        )}
-      </section>
+        <label>
+          Level<br />
+          <select
+            value={skillForm.level}
+            onChange={e =>
+              setSkillForm(prev => ({
+                ...prev,
+                level: e.target.value,
+              }))
+            }
+          >
+            <option value="">Select a level</option>
+            <option value="BEGINNER">Beginner</option>
+            <option value="INTERMEDIATE">Intermediate</option>
+            <option value="ADVANCED">Advanced</option>
+          </select>
+        </label>
+        <br />
+
+        <label>
+          Notes<br />
+          <textarea
+            value={skillForm.notes}
+            onChange={e =>
+              setSkillForm(prev => ({
+                ...prev,
+                notes: e.target.value,
+              }))
+            }
+            rows={3}
+          />
+        </label>
+      </div>
+
+      <button
+        type="button"
+        onClick={async function () {
+          await saveSkillSection();
+          advance("skills");
+        }}
+      >
+        Save & Continue
+      </button>
+    </div>
+  )}
+</section>
       
       <section className="card" ref={projectsRef}>
         <button
@@ -587,31 +965,65 @@ async function saveWorkSection() {
           Projects
         </button>
         {active === "projects" && (
-          <div id="panel-projects">
-            <div>
-               <label>
-              Project Name<br />
-              <input type="text" />
-            </label>
-            <br />
+    <div id="panel-projects">
+      <div>
+        <label>
+          Project Name<br />
+          <input
+            type="text"
+            value={projectForm.name}
+            onChange={e =>
+              setProjectForm(prev => ({
+                ...prev,
+                name: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
 
-            <label>
-              Link (GitHub / Live Site)<br />
-              <input type="url" />
-            </label>
-            <br />
+        <label>
+          Description<br />
+          <textarea
+            value={projectForm.description}
+            onChange={e =>
+              setProjectForm(prev => ({
+                ...prev,
+                description: e.target.value,
+              }))
+            }
+            rows={3}
+          />
+        </label>
+        <br />
 
-            <label>
-              Description<br />
-              <textarea />
-            </label> 
-            </div>
-            <button type="button" onClick={function(){ /* save logic */ advance("projects"); }}>
-              Save & Continue
-            </button>
-          </div>
-        )}
-      </section>
+        <label>
+          Link (URL)<br />
+          <input
+            type="url"
+            value={projectForm.link}
+            onChange={e =>
+              setProjectForm(prev => ({
+                ...prev,
+                link: e.target.value,
+              }))
+            }
+          />
+        </label>
+      </div>
+
+      <button
+        type="button"
+        onClick={async function () {
+          await saveProjectSection();
+          advance("projects");
+        }}
+      >
+        Save & Continue
+      </button>
+    </div>
+  )}
+</section>
 
       <section className="card" ref={languagesRef}>
         <button
@@ -623,33 +1035,56 @@ async function saveWorkSection() {
           Languages
         </button>
         {active === "languages" && (
-          <div id="panel-languages">
-            <div>
-               <label>
-              Language<br />
-              <input type="text" />
-            </label>
-            <br />
+    <div id="panel-languages">
+      <div>
+        <label>
+          Language<br />
+          <input
+            type="text"
+            value={languageForm.name}
+            onChange={e =>
+              setLanguageForm(prev => ({
+                ...prev,
+                name: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
 
-            <label>
-              Proficiency<br />
-              <select name="languageLevel">
-                <option value="">Select level</option>
-                <option value="BEGINNER">Beginner</option>
-                <option value="INTERMEDIATE">Intermediate</option>
-                <option value="ADVANCED">Advanced</option>
-                <option value="NATIVE">Native</option>
-              </select>
-            </label>
-            <br />
+        <label>
+          Level<br />
+          <select
+            value={languageForm.level}
+            onChange={e =>
+              setLanguageForm(prev => ({
+                ...prev,
+                level: e.target.value,
+              }))
+            }
+          >
+            <option value="">Select a level</option>
+            <option value="BEGINNER">Beginner</option>
+            <option value="INTERMEDIATE">Intermediate</option>
+            <option value="ADVANCED">Advanced</option>
+            <option value="NATIVE">Native</option>
+          </select>
+        </label>
+      </div>
 
-            </div>
-            <button type="button" onClick={function(){ /* savelogic */ advance("languages"); }}>
-              Save & Continue
-            </button>
-          </div>
-        )}
-      </section>
+      <button
+        type="button"
+        onClick={async function () {
+          await saveLanguageSection();
+          advance("languages");
+        }}
+      >
+        Save & Continue
+      </button>
+    </div>
+  )}
+</section>
+
 
       <section className="card" ref={awardsRef}>
         <button
@@ -661,70 +1096,151 @@ async function saveWorkSection() {
           Awards
         </button>
         {active === "awards" && (
-          <div id="panel-awards">
-            <div>
-               <label>
-              Award Title<br />
-              <input type="text" />
-            </label>
-            <br />
+    <div id="panel-awards">
+      <div>
+        <label>
+          Award Name<br />
+          <input
+            type="text"
+            value={awardForm.name}
+            onChange={e =>
+              setAwardForm(prev => ({
+                ...prev,
+                name: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
 
-            <label>
-              Organization<br />
-              <input type="text"/>
-            </label>
-            <br />
+        <label>
+          Issuer<br />
+          <input
+            type="text"
+            value={awardForm.issuer}
+            onChange={e =>
+              setAwardForm(prev => ({
+                ...prev,
+                issuer: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
 
-            <label>
-              Date<br />
-              <input type="date" />
-            </label>
-            <br />  
-            </div>
-            <button type="button" onClick={function(){ /* save */ advance("awards"); }}>
-              Save & Continue
-            </button>
-          </div>
-        )}
-      </section>
+        <label>
+          Date Issued<br />
+          <input
+            type="date"
+            value={awardForm.issueDate}
+            onChange={e =>
+              setAwardForm(prev => ({
+                ...prev,
+                issueDate: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
 
-      <section className="card" ref={licensesRef}>
-        <button
-          type="button"
-          onClick={function(){ toggle("licenses"); }}
-          aria-expanded={active === "licenses"}
-          aria-controls="panel-licenses"
-        >
-          Licenses
-        </button>
-        {active === "licenses" && (
-          <div id="panel-licenses">
-            <div>
-                <label>
-              Name<br />
-              <input type="text" />
-            </label>
-            <br />
+        <label>
+          Description<br />
+          <textarea
+            value={awardForm.description}
+            onChange={e =>
+              setAwardForm(prev => ({
+                ...prev,
+                description: e.target.value,
+              }))
+            }
+            rows={3}
+          />
+        </label>
+      </div>
 
-            <label>
-              Issuing Organization<br />
-              <input type="text" />
-            </label>
-            <br />
+      <button
+        type="button"
+        onClick={async function () {
+          await saveAwardSection();
+          advance("awards"); 
+        }}
+      >
+        Save & Continue
+      </button>
+    </div>
+  )}
+</section>
 
-            <label>
-              Issue Date<br />
-              <input type="date"/>
-            </label>
-            <br />
+    <section className="card" ref={licensesRef}>
+  <button
+    type="button"
+    onClick={function () { toggle("licenses"); }}
+    aria-expanded={active === "licenses"}
+    aria-controls="panel-licenses"
+  >
+    Licenses
+  </button>
 
-            </div>
-            <button type="button" onClick={function(){ /* save */ advance("licenses"); }}>
-              Save & Finish
-            </button>
-          </div>
-        )}
-      </section>
+  {active === "licenses" && (
+    <div id="panel-licenses">
+      <div>
+        <label>
+          Name<br />
+          <input
+            type="text"
+            value={licenseForm.name}
+            onChange={e =>
+              setLicenseForm(prev => ({
+                ...prev,
+                name: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
+
+        <label>
+          Institution / Issuer<br />
+          <input
+            type="text"
+            value={licenseForm.institution}
+            onChange={e =>
+              setLicenseForm(prev => ({
+                ...prev,
+                institution: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <br />
+
+        <label>
+          Description<br />
+          <textarea
+            value={licenseForm.description}
+            onChange={e =>
+              setLicenseForm(prev => ({
+                ...prev,
+                description: e.target.value,
+              }))
+            }
+            rows={3}
+          />
+        </label>
+      </div>
+
+      <button
+        type="button"
+        onClick={async function () {
+          await saveLicenseSection();
+          handleViewResume();
+        }}
+      >
+        Save & View Resume
+      </button>
+    </div>
+  )}
+</section>
     </div>
   );
 }

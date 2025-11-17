@@ -39,6 +39,7 @@ export default function ResumeDisplay() {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
 
+
   //resume selector drop-down
 function handleResumeSelect(event) {
     let selectedValue = event.target.value;
