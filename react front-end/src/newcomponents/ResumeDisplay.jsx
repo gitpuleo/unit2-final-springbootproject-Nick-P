@@ -12,8 +12,9 @@ export default function ResumeDisplay() {
   
   const { id: routeId } = useParams();    //now the id is not hardcoded, ready for auth implementation
   const resumeId = routeId ? routeId.trim() : "";     //for handling spacing that might disrupt reading
-   const navigate = useNavigate(); //for resume selector drop-down 
   
+  //for resume selector drop-down 
+  const navigate = useNavigate();
   //state variables for switching in selector
   const [showWork, setShowWork] = useState(true);
   const [showEducation, setShowEducation] = useState(true);

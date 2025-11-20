@@ -14,11 +14,20 @@ const [active, setActive] = useState("work");
 //state for validation warning
 const [workError, setWorkError] = useState("");
 
-//state for creating new resume entry
+//state for creating new resume entry and holding its id value
 const [resumeId, setResumeId] = useState(null);
 
 //hook for navigating to completed resume
 const navigateButton = useNavigate();
+
+//auto-scroll references
+const workRef = useRef(null);
+const educationRef = useRef(null);
+const skillsRef = useRef(null);
+const projectsRef = useRef(null);
+const languagesRef = useRef(null);
+const awardsRef = useRef(null);
+const licensesRef = useRef(null);
 
 
 //logic to instantiate new entry in resume table
@@ -44,18 +53,11 @@ useEffect(() => {
 
 
 
-//auto-scroll references
-const workRef = useRef(null);
-const educationRef = useRef(null);
-const skillsRef = useRef(null);
-const projectsRef = useRef(null);
-const languagesRef = useRef(null);
-const awardsRef = useRef(null);
-const licensesRef = useRef(null);
-
-let nextMap = { work: "education", education: "skills", skills: "projects", projects: "languages", languages: "awards", awards: "licenses" }; //auto-advancing sequence
 
   //methods for auto-advancing accordians open and closed
+let nextMap = { work: "education", education: "skills", skills: "projects", projects: "languages", languages: "awards", awards: "licenses" }; //auto-advancing sequence
+
+
   function toggle(key) {
     setActive(key);
     scrollToSection(key);
